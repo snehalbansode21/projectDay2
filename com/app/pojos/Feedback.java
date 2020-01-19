@@ -4,11 +4,17 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "Feedback_Tb")
+@JsonIgnoreProperties(value= {"user"})
 public class Feedback {
 	private Integer feedbackId;
 	private String desc;
+	@DateTimeFormat(pattern = "dd-MM-yyyy")
 	private Date feedbackDate;
 	private User user;
 	public Feedback() {

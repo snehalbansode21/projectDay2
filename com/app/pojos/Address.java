@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "Address_Tb")
 public class Address {
 	private Integer addressId;
-	private String city;
+	private String address;
 	private String state;
 	private String pinCode;
 	private User user;
@@ -15,9 +15,9 @@ public class Address {
 	{
 		// TODO Auto-generated constructor stub
 	}
-	public Address(String city, String state, String pinCode) {
+	public Address(String address, String state, String pinCode) {
 		super();
-		this.city = city;
+		this.address = address;
 		this.state = state;
 		this.pinCode = pinCode;
 	}
@@ -31,12 +31,11 @@ public class Address {
 	public void setAddressId(Integer addressId) {
 		this.addressId = addressId;
 	}
-	@Column(length = 30)
-	public String getCity() {
-		return city;
+	public String getAddress() {
+		return address;
 	}
-	public void setCity(String city) {
-		this.city = city;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 	 @Column(length = 30)
 	public String getState() {
@@ -61,7 +60,7 @@ public class Address {
 	}
 	@Override
 	public String toString() {
-		return "Address [addressId=" + addressId + ", city=" + city + ", state=" + state + ", pinCode=" + pinCode
+		return "Address [addressId=" + addressId + ", address=" + address + ", state=" + state + ", pinCode=" + pinCode
 				+ ", user=" + user + "]";
 	}
 	

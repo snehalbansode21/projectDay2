@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "User_Tb")
+@JsonIgnoreProperties(value= {"addr","feedBackList","eventList","reportList","mgr"})
 public class User 
 {
 	private Integer userId;
@@ -143,13 +145,33 @@ public class User
 	public void setReportList(List<Report> reportList) {
 		this.reportList = reportList;
 	}
-
+	public void addAddress(Address a)
+	{
+		this.addr = a;
+		a.setUser(this);
+	}
+	public void removeAddress(Address a)
+	{
+		addr = null;
+		a.setUser(null);
+	}
+	public void addFeedback(Feedback f)
+	{
+		feedBackList.add(f);
+		f.setUser(this);
+	}
+	public void removeFeedback(Feedback f)
+	{
+		feedBackList.remove(f);
+		f.setUser(null);
+	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
-				+ ", confirmPassword=" + confirmPassword + ", role=" + role + ", mobNo=" + mobNo + ", addr=" + addr
-				+ "]";
+		return "User [name=" + name + ", email=" + email + ", password=" + password + ", confirmPassword="
+				+ confirmPassword + ", role=" + role + ", mobNo=" + mobNo + "]";
 	}
+
+	
 
 	
 	
