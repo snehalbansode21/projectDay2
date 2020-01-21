@@ -43,8 +43,13 @@ public class ClientDaoImpl implements IClientDao {
 	}
 	@Override
 	public List<Feedback> ListUserFeedback() {
-		String jpql="select f from Feedback f";
+		String jpql="select f from Feedback f ";
 		return sf.getCurrentSession().createQuery(jpql, Feedback.class).getResultList();
+	}
+	@Override
+	public Feedback insertFeedback(Feedback f) {
+		sf.getCurrentSession().persist(f); 
+		return f;
 	}
 	
 }

@@ -8,7 +8,6 @@ public class Report
 {
 	private Integer reportId;
 	private Event event;
-	private User user;
 	public Report() {
 		// TODO Auto-generated constructor stub
 	}
@@ -28,14 +27,6 @@ public class Report
 	}
 	public void setEvent(Event event) {
 		this.event = event;
-	}
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
 	}
 	@Override
 	public String toString() {

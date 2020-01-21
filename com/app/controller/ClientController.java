@@ -29,11 +29,11 @@ import com.app.service.IClientService;
 public class ClientController {
 	
 	@Autowired
-	private IClientService service;
+	private IClientService clientService;
 	
 	@PostConstruct
 	public void myInit() {
-		System.out.println("in init " + service);
+		System.out.println("in init " + clientService);
 	}
 	
 	@PostMapping("/register")
@@ -43,23 +43,23 @@ public class ClientController {
 		try {
 			String role = "CLIENT";
 			u.setRole(UserRole.valueOf(role));
-			return new ResponseEntity<User>(service.registerClient(u), HttpStatus.OK);
+			return new ResponseEntity<User>(clientService.registerClient(u), HttpStatus.OK);
 		}catch (RuntimeException e) {
 			e.printStackTrace();
 			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	@PutMapping("/{user_id}")
+	@PutMapping("/update/{user_id}")
 	public ResponseEntity<?> updateClient(@RequestBody Address addr,
 										@PathVariable int user_id)
 	{
 		System.out.println("in update client" + addr);
 		System.out.println("user id" +user_id);
 		try {
-			User user = service.getUserById(user_id);
-			service.addAddress(addr);
+			User user = clientService.getUserById(user_id);
+			clientService.addAddress(addr);
 			user.addAddress(addr);
-			return new ResponseEntity<User>(service.updateClient(user), HttpStatus.OK);
+			return new ResponseEntity<User>(clientService.updateClient(user), HttpStatus.OK);
 		}catch (RuntimeException e) {
 			e.printStackTrace();
 			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -70,7 +70,7 @@ public class ClientController {
 	{
 		System.out.println("in return role by email"+email);
 		try {
-			User u = service.returnRoleByEmail(email);
+			User u = clientService.returnRoleByEmail(email);
 			UserRole role = u.getRole();
 			return new ResponseEntity<UserRole>(role, HttpStatus.OK);
 		}catch (RuntimeException e) {
@@ -83,7 +83,7 @@ public class ClientController {
 	{
 		System.out.println("in list user feedback");
 		try {
-			List<Feedback> list = service.ListUserFeedback();
+			List<Feedback> list = clientService.ListUserFeedback();
 			if(list.size() == 0)
 				return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
 			return new ResponseEntity<List<Feedback>>(list, HttpStatus.OK);
@@ -92,5 +92,18 @@ public class ClientController {
 			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
+	}
+	@PostMapping("/insertfeedback/{user_id}")
+	public ResponseEntity<?> insertFeedback(@RequestBody Feedback f ,@PathVariable int user_id)
+	{
+		System.out.println("in insert feedback" +user_id +"  "+f);
+		try {
+			User u = clientService.getUserById(user_id);
+			u.addFeedback(f);
+			return new ResponseEntity<Feedback>(clientService.insertFeedback(f), HttpStatus.OK);
+		}catch (RuntimeException e) {
+			e.printStackTrace();
+			return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

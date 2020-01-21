@@ -62,7 +62,17 @@ public class EventDesc
 	public void setMgr(Manager mgr) {
 		this.mgr = mgr;
 	}
-
+	//convinience methods
+		public void addEvent(Event e)
+		{
+			this.event = e;
+			e.setEventDesc(this);
+		}
+		public void removeEvent(Event e)
+		{
+			this.event = null;
+			e.setEventDesc(null);
+		}
 	@Override
 	public String toString() {
 		return "EventDesc [eventDescId=" + eventDescId + ", eventName=" + eventName + ", eventCost=" + eventCost

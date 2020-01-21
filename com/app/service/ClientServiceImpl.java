@@ -47,5 +47,10 @@ public class ClientServiceImpl implements IClientService
 	public List<Feedback> ListUserFeedback() {
 		return dao.ListUserFeedback();
 	}
+
+	@Override
+	public Feedback insertFeedback(Feedback f) {
+		return dao.insertFeedback(f);
+	}
 	
 }

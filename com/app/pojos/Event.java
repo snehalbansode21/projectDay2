@@ -16,15 +16,15 @@ public class Event
 	private int noOfGuestsNonVeg;
 	private int eventDuration;
 	private double decorationBudget;
-	private boolean theme;
-	private boolean musicSystem;
+	private String theme;
+	private String musicSystem;
 	private double costWithoutDiscount;
 	private int discount;
 	private double costWithDiscount;
 	private User user;
 	private EventDesc eventDesc;
 	private Transaction transaction;
-	private List<FoodSubMenu> foodSbMenuList = new ArrayList<>();
+	private List<Food> foodList = new ArrayList<>();
 	private Location loc;
 	private Appointment appoint;
 	private Report report;
@@ -34,7 +34,7 @@ public class Event
 	
 	
 	public Event(Date eventDate, int noOfGuestsVeg, int noOfGuestsNonVeg, int eventDuration, double decorationBudget,
-			boolean theme, boolean musicSystem, double costWithoutDiscount, int discount, double costWithDiscount) {
+			String theme, String musicSystem, double costWithoutDiscount, int discount, double costWithDiscount) {
 		super();
 		this.eventDate = eventDate;
 		this.noOfGuestsVeg = noOfGuestsVeg;
@@ -100,18 +100,25 @@ public class Event
 	public void setDecorationBudget(double decorationBudget) {
 		this.decorationBudget = decorationBudget;
 	}
-	public boolean isTheme() {
+	
+	public String getTheme() {
 		return theme;
 	}
-	public void setTheme(boolean theme) {
+	public void setTheme(String theme) {
 		this.theme = theme;
 	}
-	public boolean isMusicSystem() {
+
+
+	public String getMusicSystem() {
 		return musicSystem;
 	}
-	public void setMusicSystem(boolean musicSystem) {
+
+
+	public void setMusicSystem(String musicSystem) {
 		this.musicSystem = musicSystem;
 	}
+
+
 	@Column(name = "cost_without_discount")
 	public double getCostWithoutDiscount() {
 		return costWithoutDiscount;
@@ -134,7 +141,8 @@ public class Event
 	}
 	@ManyToOne
 	@JoinColumn(name = "user_id")
-	public User getUser() {
+	public User getUser()
+	{
 		return user;
 	}
 
@@ -158,14 +166,7 @@ public class Event
 	public void setTransaction(Transaction transaction) {
 		this.transaction = transaction;
 	}
-	@OneToMany(mappedBy = "event",cascade = CascadeType.ALL)
-	public List<FoodSubMenu> getFoodSbMenuList() {
-		return foodSbMenuList;
-	}
-
-	public void setFoodSbMenuList(List<FoodSubMenu> foodSbMenuList) {
-		this.foodSbMenuList = foodSbMenuList;
-	}
+	
 	@OneToOne
 	@JoinColumn(name = "location_id")
 	public Location getLoc() {
@@ -192,6 +193,37 @@ public class Event
 
 	public void setReport(Report report) {
 		this.report = report;
+	}
+     
+	@OneToMany(mappedBy = "event", cascade = CascadeType.ALL)
+	public List<Food> getFoodList() {
+		return foodList;
+	}
+
+	public void setFoodList(List<Food> foodList) {
+		this.foodList = foodList;
+	}
+	
+	//convenience methods
+	public void addAppointment(Appointment a)
+	{
+		this.appoint=a;
+		a.setEvent(this);
+	}
+	public void removeAppointment(Appointment a)
+	{
+		this.appoint=null;
+		a.setEvent(null);
+	}
+	public void addReport(Report r)
+	{
+		this.report = r;
+		r.setEvent(this);
+	}
+	public void removeReport(Report r)
+	{
+		this.report = null;
+		r.setEvent(null);
 	}
 
 

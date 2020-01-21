@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "Feedback_Tb")
-@JsonIgnoreProperties(value= {"user"})
+//@JsonIgnoreProperties(value= {"user"})
 public class Feedback {
 	private Integer feedbackId;
 	private String desc;

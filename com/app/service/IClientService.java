@@ -13,4 +13,5 @@ public interface IClientService {
 	Address addAddress(Address addr);
 	User returnRoleByEmail(String email);
 	List<Feedback> ListUserFeedback();
+	Feedback insertFeedback(Feedback f);
 }

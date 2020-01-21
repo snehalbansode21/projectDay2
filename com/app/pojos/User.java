@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "User_Tb")
-@JsonIgnoreProperties(value= {"addr","feedBackList","eventList","reportList","mgr"})
+@JsonIgnoreProperties(value= {"addr","feedbackList","eventList","reportList","mgr"})
 public class User 
 {
 	private Integer userId;
@@ -22,8 +22,6 @@ public class User
 	private List<Feedback> feedBackList = new ArrayList<>();
 	private List<Event> eventList = new ArrayList<>();
 	private Manager mgr;
-	private List<Report> reportList = new ArrayList<>();
-	
 	public User() {
 		// TODO Auto-generated constructor stub
 	}
@@ -113,7 +111,7 @@ public class User
 	public void setAddr(Address addr) {
 		this.addr = addr;
 	}
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 	public List<Feedback> getFeedBackList() {
 		return feedBackList;
 	}
@@ -137,14 +135,7 @@ public class User
 	public void setMgr(Manager mgr) {
 		this.mgr = mgr;
 	}
-	@OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
-	public List<Report> getReportList() {
-		return reportList;
-	}
-
-	public void setReportList(List<Report> reportList) {
-		this.reportList = reportList;
-	}
+//cm
 	public void addAddress(Address a)
 	{
 		this.addr = a;
@@ -164,6 +155,26 @@ public class User
 	{
 		feedBackList.remove(f);
 		f.setUser(null);
+	}
+	public void addEvents(Event e) 
+	{
+		eventList.add(e);
+		e.setUser(this);
+	}
+	public void removeEvents(Event e)
+	{
+		eventList.remove(e);
+		e.setUser(null);
+	}
+	public void addManager(Manager m)
+	{
+		this.mgr = m;
+		m.setUser(this);
+	}
+	public void removeManager(Manager m)
+	{
+		this.mgr = null;
+		m.setUser(null);
 	}
 	@Override
 	public String toString() {
